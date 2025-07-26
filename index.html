@@ -1,0 +1,33 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>RickAndMorty</title>
+    <link href="https://fonts.googleapis.com/css2?family=Noto+Serif:ital,wght@0,100..900;1,100..900&family=PT+Sans:ital,wght@0,400;0,700;1,400;1,700&family=Poppins:ital,wght@0,100;0,200;0,300;0,400;0,500;0,600;0,700;0,800;0,900;1,100;1,200;1,300;1,400;1,500;1,600;1,700;1,800;1,900&family=Roboto:ital,wght@0,100..900;1,100..900&family=Rubik:ital,wght@0,300..900;1,300..900&display=swap" rel="stylesheet">
+
+    <script src="https://cdn.jsdelivr.net/npm/@tailwindcss/browser@4"></script>
+    <link rel="stylesheet" href="style.css">
+</head>
+<body class="bg-[#6EACDA] ">
+    <div class="w-full h-auto flex justify-start bg-[#424769]">
+        <div class="my-2" >
+            <button class="mx-8 px-6 py-4 font-bold tracking-wide bg-slate-200  rounded-lg" type="button">Home</button>
+            <button id="characater" class="px-4 py-4 font-bold tracking-wide bg-slate-200  rounded-lg" type="button">Characters</button>
+
+        </div>
+    </div>
+    <ul id="characterList" class="max-w-[1280px]  mx-auto my-11  grid grid-cols-4 grid-rows-5">
+    </ul>
+    <div>
+        <div class="flex  max-w-[762px] m-auto flex-col">
+            <h1 class="text-8xl pl-20 font-extrabold">Rick 
+            </h1>
+                <span class="w-full text-center text-8xl font-extrabold" >And</span>   
+                 <span class="w-full text-end text-8xl font-extrabold">Morty</span>
+                <span class="text-2xl" >....Developed by StellarStack!</span>
+        </div>
+
+        <script src="script.js"></script>
+</body>
+</html>

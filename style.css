@@ -1,0 +1,23 @@
+.characterdata {
+  background-color:#348acc;
+  width: max-content;
+  padding: 12px;
+  border-radius: 19px;
+  margin-bottom: 40px;
+  width: 90%;
+}
+.textdata {
+  font-family: "Rubik", sans-serif;
+  font-size: large;
+  font-weight: 600;
+  font-style: oblique;
+  padding-top:9px;
+  color: rgba(2, 14, 119, 0.993);
+}
+.characterdata img {
+    border-radius: 100%;
+    border-width: 2px;
+    border-collapse: collapse;
+    border-color: black;
+    object-fit: cover;
+}
