@@ -9,24 +9,112 @@
     <script src="https://cdn.jsdelivr.net/npm/@tailwindcss/browser@4"></script>
     <link rel="stylesheet" href="style.css">
 </head>
-<body class="bg-[#6EACDA] ">
-    <div class="w-full h-auto flex justify-start bg-[#424769]">
-        <div class="my-2" >
-            <button class="mx-8 px-6 py-4 font-bold tracking-wide bg-slate-200  rounded-lg" type="button">Home</button>
-            <button id="characater" class="px-4 py-4 font-bold tracking-wide bg-slate-200  rounded-lg" type="button">Characters</button>
-
+<body class="bg-[#6EACDA]">
+        <div class="w-full h-auto flex justify-start bg-[#424769]">
+        <div class="my-2">
+            <button id="homebutton" class="mx-8 cursor-pointer px-6 py-4 font-bold tracking-wide bg-slate-200 active:scale-95 hover:text-white rounded-lg  duration-300 transition-all hover:bg-slate-500" type="button">Home</button>
+            <button id="characater" class="px-4 py-4 font-bold active:scale-95 duration-300 transition-all hover:bg-slate-500 hover:text-white cursor-pointer tracking-wide bg-slate-200  rounded-lg" type="button">Characters</button>
         </div>
     </div>
-    <ul id="characterList" class="max-w-[1280px]  mx-auto my-11  grid grid-cols-4 grid-rows-5">
-    </ul>
-    <div>
-        <div class="flex  max-w-[762px] m-auto flex-col">
-            <h1 class="text-8xl pl-20 font-extrabold">Rick 
-            </h1>
-                <span class="w-full text-center text-8xl font-extrabold" >And</span>   
-                 <span class="w-full text-end text-8xl font-extrabold">Morty</span>
-                <span class="text-2xl" >....Developed by StellarStack!</span>
+
+    <div id="showAllData" class="w-auto hidden justify-center px-5 " >
+        <div>
+        <div id="showdata" class="px-4 py-4 max-w-[1016px] mt-10 bg-transparent shadow-2xl bg-slate-600 mx-auto  flex flex-col ">
+            <h1 class="text-center text-2xl font-extrabold text-white"> Rick and Morty 826 Characters</h1>
+            <!-- for search the 826 character -->
+         <div class="flex justify-center items-center gap-x-6  py-5">
+  <input type="text" id="searchInput" placeholder="Characters Names" 
+         class="bg-white text-slate-400 border-2 border-cyan-600 rounded-lg outline-none font-bold 
+         placeholder:text-xl placeholder:font-semibold w-1/2 placeholder:text-green-500 p-3" />
+  <button id="searchButton" type="submit" 
+          class="bg-cyan-500 w-[15%] cursor-pointer hover:bg-lime-700 transition-all duration-300 active:scale-95 
+          border border-cyan-500 outline-none rounded-lg text-2xl font-semibold text-white h-[50px]">
+    Submit
+  </button>
+</div>
+
+            <!-- for second search -->
+            <div class=" justify-center flex items-center">
+            <div class="dropdown w-[24%] relative m-[10px] box-border">
+            <div class="selected border-2 shadow-md bg-[#1c4869] text-teal-600 justify-between flex items-center rounded-xl py-[10px] px-5 cursor-pointer transition-all h-[52px] font-semibold text-xl tracking-widest">
+                <h1>Species</h1>
+                <img class="w-3 rotate-0" src="images/downChevron.png" alt="error">
+            </div>   
+            <ul class="px-2 py-[3.2px] border absolute overflow-y-scroll hidden border-pink-500 bg-slate-600 w-full h-[165px]">
+                <li class="h-11 cursor-pointer px-2 py-3 my-1 rounded-xl border-none  text-white">Human</li>
+                <li class="h-11 cursor-pointer px-2 py-3 my-1 rounded-xl border-none  text-white">Alien</li>
+                <li class="h-11 cursor-pointer px-2 py-3 my-1 rounded-xl border-none  text-white">Humanoid</li>
+                <li class="h-11 cursor-pointer px-2 py-3 my-1 rounded-xl border-none  text-white">Mythological Creature</li>
+                <li class="h-11 cursor-pointer px-2 py-3 my-1 rounded-xl border-none  text-white">Animal</li>
+                <li class="h-11 cursor-pointer px-2 py-3 my-1 rounded-xl border-none  text-white">Robot</li>
+                <li class="h-11 cursor-pointer px-2 py-3 my-1 rounded-xl border-none  text-white">Disease</li>
+                <li class="h-11 cursor-pointer px-2 py-3 my-1 rounded-xl border-none  text-white">Cronenberg</li>
+            </ul> 
+            </div>  
+              <!--second  -->
+              <div class="dropdown w-[24%] relative m-[10px] box-border">
+            <div class="selected border-2 shadow-md bg-[#1c4869] text-teal-600 justify-between flex items-center rounded-xl py-[10px] px-5 cursor-pointer transition-all h-[52px] font-semibold text-xl tracking-widest">
+                <h1>Status</h1>
+                <img class="w-3 rotate-0" src="images/downChevron.png" alt="error">
+            </div>    
+             <ul class="px-2 py-[3.2px] hidden border absolute  border-[#1c4869] bg-[#1c4869] text-teal-700 transition-all duration-300  font-semibold tracking-wide z-[2000] w-full h-[165px]">
+                <li class="h-11 transition-all duration-300 cursor-pointer border-[#175f96] border-2 px-2 py-3 my-1 rounded-xl hover:bg-[#609ac7]  ">Alive</li>
+                <li class="h-11 cursor-pointer px-2 py-3 my-1 transition-all duration-300 rounded-xl hover:bg-[#609ac7]  border-[#175f96] border-2  ">Dead</li>
+                </ul>
+            </div>
+            <!-- third -->
+            <div class="dropdown w-[24%] relative m-[10px] box-border">
+            <div class="selected border-2 shadow-md bg-[#1c4869] text-teal-600 justify-between flex items-center rounded-xl py-[10px] px-5 cursor-pointer transition-all h-[52px] font-semibold text-xl tracking-widest">
+                <h1>Gender</h1>
+                <img class="w-3  rotate-0" src="images/downChevron.png" alt="error">
+            </div>    
+              <ul class="px-2 py-[3.2px] hidden border absolute overflow-y-scroll  border-pink-500 bg-slate-600 w-full h-[165px]">
+                <li class="h-11 transition-all duration-300 cursor-pointer border-[#175f96] border-2 px-2 py-3 my-1 rounded-xl hover:bg-[#609ac7]">Male</li>
+                <li class="h-11 transition-all duration-300 cursor-pointer border-[#175f96] border-2 px-2 py-3 my-1 rounded-xl hover:bg-[#609ac7]">Female</li>
+                <li class="h-11 transition-all duration-300 cursor-pointer border-[#175f96] border-2 px-2 py-3 my-1 rounded-xl hover:bg-[#609ac7] ">UNKNOWN</li>
+                </ul>
+            </div> 
+            <!-- reset filter -->
+<div class="dropdown  relative m-[10px] box-border">
+            <div class="selected border-2 shadow-md bg-[#1c4869] text-teal-600 justify-between flex items-center rounded-xl py-[10px] px-5 cursor-pointer transition-all h-[52px] font-semibold text-xl tracking-widest">
+                <h1>Reset filter</h1>
+            </div>    
+            </div>
+            <!--  -->
+            </div>
+        </div> 
+        <ul id="characterList" class="max-w-[1280px] gap-x-3 gap-y-4 mx-auto mt-11  grid grid-cols-4 grid-rows-5">
+        </ul>
+<div class="h-[50px] block mt-6 mb-20 items-center mx-auto">
+  <div id="numbers" class="flex  justify-center  gap-[10px] p-4">
+    <button type="button" class="w-[30px] h-[30px] rounded-[10px] flex items-center content-center font-extrabold bg-orange-500 cursor-pointer">
+        <img class="rotate-90 w-4 mx-auto mr-2 " src="/images/downChevron.png" alt="error">
+    </button>
+<!--  -->
+       <div id="dots" class="h-[30px] w-[30px] rounded-full flex items-center justify-center cursor-pointer text-sm font-semibold bg-orange-500 text-white">....</div>
+<!--  -->
+    <button type="button" id="lastArrow" class="w-[30px] h-[30px] rounded-[10px] flex items-center content-center font-extrabold bg-orange-500 cursor-pointer">
+        <!-- add numbers -->
+      
+        <!-- end arrow div -->
+ <img class="rotate-[273deg] w-4 mx-auto ml-2 " src="/images/downChevron.png" alt="error">
+    </button>
+  </div>
+</div>
+
+    </div>
         </div>
+      <div id="frontPage" class="flex  max-w-[762px] h-[500px]  justify-center m-auto flex-col">
+          <h1 class="text-8xl pl-20 font-extrabold">Rick 
+        </h1>
+        <span class="w-full text-center text-8xl font-extrabold" >And</span>   
+        <span class="w-full text-end text-8xl font-extrabold">Morty</span>
+    </div>
+
+<!-- for reference -->
+ <div class="fixed justify-center z-[1000] text-center flex self-end bottom-0 items-center w-full h-[60px] bg-lime-700">
+    <div class="font-semibold text-teal-100  text-2xl">Made By Abdul Haseeb</div>
+ </div>
 
         <script src="script.js"></script>
 </body>
