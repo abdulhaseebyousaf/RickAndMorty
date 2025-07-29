@@ -9,112 +9,120 @@
     <script src="https://cdn.jsdelivr.net/npm/@tailwindcss/browser@4"></script>
     <link rel="stylesheet" href="style.css">
 </head>
-<body class="bg-[#6EACDA]">
-        <div class="w-full h-auto flex justify-start bg-[#424769]">
+<body class="bg-gradient-to-br from-[#0f0c29] via-[#302b63] to-[#24243e] min-h-screen">
+        <div class="w-full h-auto flex justify-start bg-gradient-to-br from-[#0f0c29] via-[#302b63] to-[#202031] shadow-sm ">
         <div class="my-2">
             <button id="homebutton" class="mx-8 cursor-pointer px-6 py-4 font-bold tracking-wide bg-slate-200 active:scale-95 hover:text-white rounded-lg  duration-300 transition-all hover:bg-slate-500" type="button">Home</button>
             <button id="characater" class="px-4 py-4 font-bold active:scale-95 duration-300 transition-all hover:bg-slate-500 hover:text-white cursor-pointer tracking-wide bg-slate-200  rounded-lg" type="button">Characters</button>
         </div>
     </div>
+    <!-- showall data krny ka lea -->
+    
 
-    <div id="showAllData" class="w-auto hidden justify-center px-5 " >
+    <div id="showAllData" class="w-auto hidden justify-center px-5 max-md:px-28 " >
         <div>
-        <div id="showdata" class="px-4 py-4 max-w-[1016px] mt-10 bg-transparent shadow-2xl bg-slate-600 mx-auto  flex flex-col ">
-            <h1 class="text-center text-2xl font-extrabold text-white"> Rick and Morty 826 Characters</h1>
+  <div id="showdata" class="px-4 py-4 max-w-[1016px]  mt-10 rounded-sm  bg-[#1949775d] shadow-md   mx-auto  flex flex-col max-[733px]:content-center ">
+            <h1 class=" text-center text-2xl font-extrabold text-[#1879b9]"> Rick and Morty 826 Characters</h1>
             <!-- for search the 826 character -->
-         <div class="flex justify-center items-center gap-x-6  py-5">
+         <div class="flex justify-center items-center gap-x-6  py-5 max-[733px]:flex-col max-[733px]:gap-y-5">
   <input type="text" id="searchInput" placeholder="Characters Names" 
          class="bg-white text-slate-400 border-2 border-cyan-600 rounded-lg outline-none font-bold 
-         placeholder:text-xl placeholder:font-semibold w-1/2 placeholder:text-green-500 p-3" />
+         placeholder:text-xl placeholder:font-semibold w-1/2 placeholder:text-[#90a1b9] p-3 max-[733px]:w-[97%] max-sm:placeholder:text-base" />
   <button id="searchButton" type="submit" 
-          class="bg-cyan-500 w-[15%] cursor-pointer hover:bg-lime-700 transition-all duration-300 active:scale-95 
-          border border-cyan-500 outline-none rounded-lg text-2xl font-semibold text-white h-[50px]">
+          class=" w-[15%] max-[733px]:w-[97%] border-2 cursor-pointer box-border border-[#1c4869] bg-[#1c4869] text-teal-700 ]  hover:bg-[#466a79] transition-all duration-300 active:scale-95 max-sm:text-lg  max-sm:font-bold max-sm:h-11
+  outline-none rounded-lg text-2xl font-semibold h-[50px]">
     Submit
   </button>
 </div>
-
             <!-- for second search -->
-            <div class=" justify-center flex items-center">
-            <div class="dropdown w-[24%] relative m-[10px] box-border">
-            <div class="selected border-2 shadow-md bg-[#1c4869] text-teal-600 justify-between flex items-center rounded-xl py-[10px] px-5 cursor-pointer transition-all h-[52px] font-semibold text-xl tracking-widest">
-                <h1>Species</h1>
-                <img class="w-3 rotate-0" src="images/downChevron.png" alt="error">
+            <div class=" justify-center  flex flex-wrap items-center max-[733px]:flex-col max-[733px]:content-center ">
+            <div class="dropdown w-[24%]  relative m-[10px] box-border max-[733px]:w-[97%]">
+            <div  class="selected border-2 shadow-md bg-[#1c4869] text-teal-600 justify-between flex items-center rounded-xl py-[10px] px-5 cursor-pointer transition-all hover:bg-[#466a79] max-sm:font-bold font-semibold text-xl tracking-widest">
+                <h1 class="max-sm:text-lg " >Species</h1>
+                <img class="imagee w-3 rotate-0" src="images/downChevron.png" alt="error">
             </div>   
-            <ul class="px-2 py-[3.2px] border absolute overflow-y-scroll hidden border-pink-500 bg-slate-600 w-full h-[165px]">
-                <li class="h-11 cursor-pointer px-2 py-3 my-1 rounded-xl border-none  text-white">Human</li>
-                <li class="h-11 cursor-pointer px-2 py-3 my-1 rounded-xl border-none  text-white">Alien</li>
-                <li class="h-11 cursor-pointer px-2 py-3 my-1 rounded-xl border-none  text-white">Humanoid</li>
-                <li class="h-11 cursor-pointer px-2 py-3 my-1 rounded-xl border-none  text-white">Mythological Creature</li>
-                <li class="h-11 cursor-pointer px-2 py-3 my-1 rounded-xl border-none  text-white">Animal</li>
-                <li class="h-11 cursor-pointer px-2 py-3 my-1 rounded-xl border-none  text-white">Robot</li>
-                <li class="h-11 cursor-pointer px-2 py-3 my-1 rounded-xl border-none  text-white">Disease</li>
-                <li class="h-11 cursor-pointer px-2 py-3 my-1 rounded-xl border-none  text-white">Cronenberg</li>
+            <ul id="showinner" class="px-2 py-[3.2px] hidden border absolute  border-[#1c4869] bg-[#1c4869] text-teal-700 transition-all duration-300  font-semibold tracking-wide z-[2000] w-full h-[165px] overflow-y-scroll">
+                <li class="h-11 transition-all duration-300 cursor-pointer border-[#175f96] border-2 px-2 py-3 my-1 rounded-xl hover:bg-[#609ac7] ">Human</li>
+                <li class="h-11 transition-all duration-300 cursor-pointer border-[#175f96] border-2 px-2 py-3 my-1 rounded-xl hover:bg-[#609ac7] ">Alien</li>
+                <li class="h-11 transition-all duration-300 cursor-pointer border-[#175f96] border-2 px-2 py-3 my-1 rounded-xl hover:bg-[#609ac7] ">Humanoid</li>
+                <li class="h-11 transition-all duration-300 cursor-pointer border-[#175f96] border-2 px-2 py-3 my-1 rounded-xl hover:bg-[#609ac7] ">Mythological Creature</li>
+                <li class="h-11 transition-all duration-300 cursor-pointer border-[#175f96] border-2 px-2 py-3 my-1 rounded-xl hover:bg-[#609ac7] ">Animal</li>
+                <li class="h-11 transition-all duration-300 cursor-pointer border-[#175f96] border-2 px-2 py-3 my-1 rounded-xl hover:bg-[#609ac7] ">Robot</li>
+                <li class="h-11 transition-all duration-300 cursor-pointer border-[#175f96] border-2 px-2 py-3 my-1 rounded-xl hover:bg-[#609ac7] ">Disease</li>
+                <li class="h-11 transition-all duration-300 cursor-pointer border-[#175f96] border-2 px-2 py-3 my-1 rounded-xl hover:bg-[#609ac7] ">Cronenberg</li>
             </ul> 
             </div>  
               <!--second  -->
-              <div class="dropdown w-[24%] relative m-[10px] box-border">
-            <div class="selected border-2 shadow-md bg-[#1c4869] text-teal-600 justify-between flex items-center rounded-xl py-[10px] px-5 cursor-pointer transition-all h-[52px] font-semibold text-xl tracking-widest">
-                <h1>Status</h1>
-                <img class="w-3 rotate-0" src="images/downChevron.png" alt="error">
+              <div class="dropdown w-[24%] relative m-[10px] box-border max-[733px]:w-[97%]">
+            <div  class="selected border-2 shadow-md bg-[#1c4869] text-teal-600 justify-between flex items-center rounded-xl py-[10px] px-5 cursor-pointer transition-all hover:bg-[#466a79] h-[52px] font-semibold text-xl tracking-widest">
+                <h1 class="max-sm:text-lg ">Status</h1>
+                <img class="imagee w-3 rotate-0" src="images/downChevron.png" alt="error">
             </div>    
-             <ul class="px-2 py-[3.2px] hidden border absolute  border-[#1c4869] bg-[#1c4869] text-teal-700 transition-all duration-300  font-semibold tracking-wide z-[2000] w-full h-[165px]">
+             <ul id="showinner" class="px-2 py-[3.2px] hidden  border absolute  border-[#1c4869] bg-[#1c4869] text-teal-700 transition-all duration-300  font-semibold tracking-wide z-[2000] w-full ">
                 <li class="h-11 transition-all duration-300 cursor-pointer border-[#175f96] border-2 px-2 py-3 my-1 rounded-xl hover:bg-[#609ac7]  ">Alive</li>
                 <li class="h-11 cursor-pointer px-2 py-3 my-1 transition-all duration-300 rounded-xl hover:bg-[#609ac7]  border-[#175f96] border-2  ">Dead</li>
                 </ul>
             </div>
             <!-- third -->
-            <div class="dropdown w-[24%] relative m-[10px] box-border">
-            <div class="selected border-2 shadow-md bg-[#1c4869] text-teal-600 justify-between flex items-center rounded-xl py-[10px] px-5 cursor-pointer transition-all h-[52px] font-semibold text-xl tracking-widest">
-                <h1>Gender</h1>
-                <img class="w-3  rotate-0" src="images/downChevron.png" alt="error">
+            <div class="dropdown w-[24%] relative m-[10px] box-border max-[733px]:w-[97%]">
+            <div  class="selected border-2 shadow-md bg-[#1c4869] text-teal-600 justify-between flex items-center rounded-xl py-[10px] px-5 cursor-pointer transition-all hover:bg-[#466a79] h-[52px] font-semibold text-xl tracking-widest">
+                <h1 class="max-sm:text-lg ">Gender</h1>
+                <img class="imagee w-3 rotate-0" src="images/downChevron.png" alt="error">
             </div>    
-              <ul class="px-2 py-[3.2px] hidden border absolute overflow-y-scroll  border-pink-500 bg-slate-600 w-full h-[165px]">
+              <ul id="showinner" class="px-2 py-[3.2px]  border absolute  border-[#1c4869] bg-[#1c4869] text-teal-700 transition-all duration-300  font-semibold tracking-wide z-[2000] w-full h-[165px] hidden">
                 <li class="h-11 transition-all duration-300 cursor-pointer border-[#175f96] border-2 px-2 py-3 my-1 rounded-xl hover:bg-[#609ac7]">Male</li>
                 <li class="h-11 transition-all duration-300 cursor-pointer border-[#175f96] border-2 px-2 py-3 my-1 rounded-xl hover:bg-[#609ac7]">Female</li>
                 <li class="h-11 transition-all duration-300 cursor-pointer border-[#175f96] border-2 px-2 py-3 my-1 rounded-xl hover:bg-[#609ac7] ">UNKNOWN</li>
                 </ul>
             </div> 
             <!-- reset filter -->
-<div class="dropdown  relative m-[10px] box-border">
-            <div class="selected border-2 shadow-md bg-[#1c4869] text-teal-600 justify-between flex items-center rounded-xl py-[10px] px-5 cursor-pointer transition-all h-[52px] font-semibold text-xl tracking-widest">
-                <h1>Reset filter</h1>
+           <div class="dropdown  relative m-[10px] box-border max-[733px]:w-[97%]">
+           <div onclick="restalldata()"  class="border-2 shadow-md bg-[#1c4869] text-teal-600 justify-between flex items-center rounded-xl py-[10px] px-5 cursor-pointer transition-all h-[52px] hover:bg-[#466a79] font-semibold text-xl tracking-widest ">
+                <h1 class="max-sm:text-lg">Reset filter</h1>
             </div>    
             </div>
             <!--  -->
             </div>
         </div> 
-        <ul id="characterList" class="max-w-[1280px] gap-x-3 gap-y-4 mx-auto mt-11  grid grid-cols-4 grid-rows-5">
+     
+        <ul id="characterList" class="max-w-[1280px] gap-x-3 gap-y-4 mx-auto mt-11  grid grid-cols-4 grid-rows-5 max-lg:grid-cols-3 max-md:grid-cols-2 max-sm:grid-cols-1">
         </ul>
 <div class="h-[50px] block mt-6 mb-20 items-center mx-auto">
-  <div id="numbers" class="flex  justify-center  gap-[10px] p-4">
-    <button type="button" class="w-[30px] h-[30px] rounded-[10px] flex items-center content-center font-extrabold bg-orange-500 cursor-pointer">
-        <img class="rotate-90 w-4 mx-auto mr-2 " src="/images/downChevron.png" alt="error">
-    </button>
-<!--  -->
-       <div id="dots" class="h-[30px] w-[30px] rounded-full flex items-center justify-center cursor-pointer text-sm font-semibold bg-orange-500 text-white">....</div>
-<!--  -->
-    <button type="button" id="lastArrow" class="w-[30px] h-[30px] rounded-[10px] flex items-center content-center font-extrabold bg-orange-500 cursor-pointer">
-        <!-- add numbers -->
-      
-        <!-- end arrow div -->
- <img class="rotate-[273deg] w-4 mx-auto ml-2 " src="/images/downChevron.png" alt="error">
-    </button>
-  </div>
+<div id="numbers" class="flex justify-center gap-[10px] p-4 items-center max-sm:p-1 max-sm:mt-11">
+  <!-- Left arrow -->
+  <button id="firstArrow" type="button" class="w-[30px] h-[30px] max-sm:w-[27px] max-sm:h-[27px] rounded-[10px] flex items-center justify-center font-extrabold bg-orange-500 cursor-pointer">
+    <img class="rotate-90 w-4" src="/images/downChevron.png" alt="error" />
+  </button>
+
+  <!-- Numbers will be inserted here dynamically -->
+
+  <!-- Dots -->
+  <div id="dots" class="h-[30px] w-[30px] rounded-full flex items-center justify-center text-sm font-semibold max-sm:w-[27px] max-sm:h-[27px] bg-orange-500 text-white">....</div>
+
+  <!-- Right arrow -->
+  <button id="lastArrow" type="button" class="w-[30px] h-[30px] rounded-[10px] max-sm:w-[27px] max-sm:h-[27px] flex items-center justify-center font-extrabold bg-orange-500 cursor-pointer">
+    <img class="rotate-[273deg] w-4" src="/images/downChevron.png" alt="error" />
+  </button>
+</div>
 </div>
 
     </div>
         </div>
-      <div id="frontPage" class="flex  max-w-[762px] h-[500px]  justify-center m-auto flex-col">
-          <h1 class="text-8xl pl-20 font-extrabold">Rick 
-        </h1>
-        <span class="w-full text-center text-8xl font-extrabold" >And</span>   
-        <span class="w-full text-end text-8xl font-extrabold">Morty</span>
-    </div>
+        
+    <div id="frontPage" class="flex max-w-[762px] h-[500px] justify-center m-auto px-7 max-sm:px-6 flex-col">
+    <h1 id="rick" class="text-8xl pl-20 font-extrabold hidden-before-anim text-transparent max-sm:text-center bg-gradient-to-rtext-transparent bg-clip-text bg-gradient-to-r from-yellow-300 to-pink-500 drop-shadow-md max-sm:text-7xl max-sm:pl-0">Rick</h1>
+    <span id="and" class="w-full text-center text-8xl font-extrabold hidden-before-anim text-transparent bg-clip-text bg-gradient-to-r from-pink-500 via-red-500 to-yellow-500 drop-shadow-xl max-sm:text-7xl">And</span>
+    <span id="morty" class="w-full text-end text-8xl font-extrabold h-[110px] hidden-before-anim text-transparent bg-clip-text bg-gradient-to-r from-pink-500 via-red-500 to-yellow-500 drop-shadow-xl max-sm:text-center max-sm:h-[95px] max-sm:text-7xl">Morty</span>
+    <span id="footer" class="w-full text-end mt-7 text-xl font-semibold hidden-before-anim text-transparent bg-clip-text bg-gradient-to-r from-yellow-300 to-cyan-500 drop-shadow-md max-sm:text-center max-sm:mt-0 ">... Developed by Stellar<span class="font-normal">Stack!</span></span>
+  </div>
 
 <!-- for reference -->
- <div class="fixed justify-center z-[1000] text-center flex self-end bottom-0 items-center w-full h-[60px] bg-lime-700">
-    <div class="font-semibold text-teal-100  text-2xl">Made By Abdul Haseeb</div>
- </div>
+  <div
+    class="fixed bottom-0 w-full h-[60px] z-[1000] rounded-t-[70%] flex items-center justify-center bg-gradient-to-r from-lime-700 via-lime-700 to-green-800 footer-animate hidden-before-anim shadow-2xl" id="footerBar">
+    <div class="text-2xl text-[#4c4783] max-sm:text-xl my-4 font-bold tracking-wide drop-shadow-md">
+      Made By <span class=" drop-shadow-sm  text-[#413b83]">Abdul Haseeb</span>
+    </div>
+  </div>
 
         <script src="script.js"></script>
 </body>
