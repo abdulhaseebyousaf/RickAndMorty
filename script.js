@@ -182,26 +182,23 @@ document.querySelectorAll('#showinner li').forEach(item => {
   item.addEventListener('click', async function () {
     const selectedText = item.textContent.trim();
     const parentDropdown = item.closest('.dropdown');
-    const showInner = parentDropdown.querySelector('.showinner');
+    const category = parentDropdown.querySelector('h1').textContent.trim().toLowerCase();
     const arrow = parentDropdown.querySelector('.imagee');
     const dropdownList = parentDropdown.querySelector("ul");
-    const category = parentDropdown.querySelector('h1').textContent.trim().toLowerCase();
 
-    if (selectedText.toLowerCase() === 'none') {
-      if (showInner) showInner.textContent = "";
-      if (arrow) arrow.style.transform = 'rotate(0deg)';
-      delete activeFilters[category];
-    } else {
-      if (showInner) showInner.textContent = selectedText;
-      activeFilters[category] = selectedText;
-    }
 
     if (dropdownList) dropdownList.style.display = "none";
     if (arrow) arrow.style.transform = "rotate(0deg)";
 
     list.innerHTML = "";
 
-    let matchFound = false;
+
+    if (['species', 'status', 'gender'].includes(category)) {
+      activeFilters[category] = selectedText;
+      list.innerHTML = "";
+    }
+
+    let matchFound = false; 
 
     try {
       for (let page = 1; page <= totalPages; page++) {
