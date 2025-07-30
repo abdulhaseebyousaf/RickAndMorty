@@ -4,6 +4,7 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>RickAndMorty</title>
+    <link rel="shortcut icon" href="images/favicon.png" type="images/x-icon">
     <link href="https://fonts.googleapis.com/css2?family=Noto+Serif:ital,wght@0,100..900;1,100..900&family=PT+Sans:ital,wght@0,400;0,700;1,400;1,700&family=Poppins:ital,wght@0,100;0,200;0,300;0,400;0,500;0,600;0,700;0,800;0,900;1,100;1,200;1,300;1,400;1,500;1,600;1,700;1,800;1,900&family=Roboto:ital,wght@0,100..900;1,100..900&family=Rubik:ital,wght@0,300..900;1,300..900&display=swap" rel="stylesheet">
 
     <script src="https://cdn.jsdelivr.net/npm/@tailwindcss/browser@4"></script>
@@ -35,11 +36,11 @@
             <div class=" justify-center  flex flex-wrap items-center max-[733px]:flex-col max-[733px]:content-center ">
             <div class="dropdown w-[24%]  relative m-[10px] box-border max-[733px]:w-[97%]">
             <div  class="selected border-2 shadow-md bg-[#1c4869] text-teal-600 justify-between flex items-center rounded-xl py-[10px] px-5 cursor-pointer transition-all hover:bg-[#466a79] max-sm:font-bold font-semibold text-xl tracking-widest">
-                <h1 class="max-sm:text-lg " >Species</h1>
+                <h1 id="species" class="showinner max-sm:text-lg" >Species</h1>
                 <img class="imagee w-3 rotate-0" src="images/downChevron.png" alt="error">
             </div>   
-            <ul id="showinner" class=" px-2 py-[3.2px] hidden border absolute  border-[#1c4869] bg-[#1c4869] text-teal-700 transition-all duration-300  font-semibold tracking-wide z-[2000] w-full h-[165px] overflow-y-scroll">
-                <li class="h-11 transition-all duration-300 cursor-pointer border-[#175f96] border-2 px-2 py-3 my-1 rounded-xl hover:bg-[#609ac7] ">Human</li>
+            <ul id="showinner" class=" px-2 py-[3.2px] hidden border absolute  border-[#1c4869] bg-[#1c4869] text-teal-700 transition-all duration-300  font-semibold tracking-wide z-[2000] w-full h-[165px] rounded-sm overflow-y-scroll">
+                <li class="h-11 transition-all  duration-300 cursor-pointer border-[#175f96] border-2 px-2 py-3 my-1 rounded-xl hover:bg-[#609ac7] ">Human</li>
                 <li class="h-11 transition-all duration-300 cursor-pointer border-[#175f96] border-2 px-2 py-3 my-1 rounded-xl hover:bg-[#609ac7] ">Alien</li>
                 <li class="h-11 transition-all duration-300 cursor-pointer border-[#175f96] border-2 px-2 py-3 my-1 rounded-xl hover:bg-[#609ac7] ">Humanoid</li>
                 <li class="h-11 transition-all duration-300 cursor-pointer border-[#175f96] border-2 px-2 py-3 my-1 rounded-xl hover:bg-[#609ac7] ">Mythological Creature</li>
@@ -52,10 +53,10 @@
               <!--second  -->
               <div class="dropdown w-[24%] relative m-[10px] box-border max-[733px]:w-[97%]">
             <div  class="selected border-2 shadow-md bg-[#1c4869] text-teal-600 justify-between flex items-center rounded-xl py-[10px] px-5 cursor-pointer transition-all hover:bg-[#466a79] h-[52px] font-semibold text-xl tracking-widest">
-                <h1 class="max-sm:text-lg ">Status</h1>
+                <h1 id="status" class="showinner max-sm:text-lg ">Status</h1>
                 <img class="imagee w-3 rotate-0" src="images/downChevron.png" alt="error">
             </div>    
-             <ul id="showinner" class=" px-2 py-[3.2px] hidden  border absolute  border-[#1c4869] bg-[#1c4869] text-teal-700 transition-all duration-300  font-semibold tracking-wide z-[2000] w-full ">
+             <ul id="showinner" class=" px-2 py-[3.2px] hidden  border absolute  border-[#1c4869] bg-[#1c4869] text-teal-700 transition-all duration-300  font-semibold tracking-wide rounded-sm z-[2000] w-full ">
                 <li class="h-11 transition-all duration-300 cursor-pointer border-[#175f96] border-2 px-2 py-3 my-1 rounded-xl hover:bg-[#609ac7]  ">Alive</li>
                 <li class="h-11 cursor-pointer px-2 py-3 my-1 transition-all duration-300 rounded-xl hover:bg-[#609ac7]  border-[#175f96] border-2  ">Dead</li>
                 </ul>
@@ -63,10 +64,10 @@
             <!-- third -->
             <div class="dropdown w-[24%] relative m-[10px] box-border max-[733px]:w-[97%]">
             <div  class="selected border-2 shadow-md bg-[#1c4869] text-teal-600 justify-between flex items-center rounded-xl py-[10px] px-5 cursor-pointer transition-all hover:bg-[#466a79] h-[52px] font-semibold text-xl tracking-widest">
-                <h1 class="max-sm:text-lg ">Gender</h1>
+                <h1 id="Gender" class="showinner max-sm:text-lg ">Gender</h1>
                 <img class="imagee w-3 rotate-0" src="images/downChevron.png" alt="error">
             </div>    
-              <ul id="showinner" class=" px-2 py-[3.2px]  border absolute  border-[#1c4869] bg-[#1c4869] text-teal-700 transition-all duration-300  font-semibold tracking-wide z-[2000] w-full h-[165px] hidden">
+              <ul id="showinner" class=" px-2 py-[3.2px]  border absolute  border-[#1c4869] bg-[#1c4869] rounded-sm text-teal-700 transition-all duration-300  font-semibold tracking-wide z-[2000] w-full h-[165px] hidden">
                 <li class="h-11 transition-all duration-300 cursor-pointer border-[#175f96] border-2 px-2 py-3 my-1 rounded-xl hover:bg-[#609ac7]">Male</li>
                 <li class="h-11 transition-all duration-300 cursor-pointer border-[#175f96] border-2 px-2 py-3 my-1 rounded-xl hover:bg-[#609ac7]">Female</li>
                 <li class="h-11 transition-all duration-300 cursor-pointer border-[#175f96] border-2 px-2 py-3 my-1 rounded-xl hover:bg-[#609ac7] ">UNKNOWN</li>
@@ -118,7 +119,7 @@
   </div>
 
 <!-- for reference -->
-  <div
+  <div id="bottom"
     class="fixed bottom-0 w-full h-[60px] z-[1000] rounded-t-[70%] flex items-center justify-center bg-gradient-to-r from-lime-700 via-lime-700 to-green-800 footer-animate hidden-before-anim shadow-2xl" id="footerBar">
     <div class="text-2xl text-[#4c4783] max-sm:text-xl my-4 font-bold tracking-wide drop-shadow-md">
       Made By <span class=" drop-shadow-sm  text-[#413b83]">Abdul Haseeb</span>

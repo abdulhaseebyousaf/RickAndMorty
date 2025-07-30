@@ -5,6 +5,7 @@ let secodCharacter = document.getElementById("showAllData");
 let totalPage = 42;
 let searchdata = document.getElementById('searchdata');
 const list = document.getElementById('characterList');
+let bottom = document.getElementById('bottom');
 
 let activeFilters = {
   species: null,
@@ -17,27 +18,27 @@ characterButton.addEventListener('click', function () {
   frontpage.style.display = "none";
   secodCharacter.style.display = "flex";
   searchdata.style.display = "flex";
+  bottom.style.display = "none";
   loadCharactersByPage(1);
   renderNumberButtons();
 });
 
 // Show home page
 homeButton.addEventListener('click', function () {
-  frontpage.style.display = "flex";
-  secodCharacter.style.display = "none";
-  searchdata.style.display = "none";
+  location.reload();
 });
 
-let matched = false;
 // Search functionality
 const searchInput = document.getElementById("searchInput");
 const searchButton = document.getElementById("searchButton");
-// agr ma oper search kr rha hon us sy mity hoay name show kry
+
 searchButton.addEventListener('click', async function () {
   const searchTerm = searchInput.value.trim().toLowerCase();
   if (!searchTerm) return;
 
   list.innerHTML = "";
+  let matched = false; // reset for every search
+
   try {
     for (let page = 1; page <= totalPage; page++) {
       const response = await fetch(`https://rickandmortyapi.com/api/character?page=${page}`);
@@ -59,8 +60,6 @@ searchButton.addEventListener('click', async function () {
     console.error("Search error:", error);
   }
 });
-
-
 
 function displayCharacter(character) {
   const div = document.createElement('div');
@@ -105,6 +104,7 @@ function loadCharactersByPage(pageNumber) {
       console.error("Failed to fetch characters:", err);
     });
 }
+
 // Pagination logic
 const numberContainer = document.getElementById('numbers');
 const numberArrow = document.getElementById('lastArrow');
@@ -136,6 +136,7 @@ function renderNumberButtons() {
   numberArrow.style.display = end < totalPages ? 'grid' : 'none';
   dots.style.display = end < totalPages ? 'grid' : 'none';
 }
+
 numberArrow.addEventListener('click', () => {
   if ((currentSet + 1) * buttonsPerSet < totalPages) {
     currentSet++;
@@ -154,8 +155,6 @@ let selectedItems = document.querySelectorAll(".selected");
 
 selectedItems.forEach(selected => {
   selected.addEventListener("click", function () {
-
-    // Pehle sab dropdowns close han
     selectedItems.forEach(item => {
       const dropdown = item.nextElementSibling;
       const arrow = item.querySelector(".imagee");
@@ -164,34 +163,45 @@ selectedItems.forEach(selected => {
         if (arrow) arrow.style.transform = "rotate(0deg)";
       }
     });
-    // Ab current dropdown toggle karen gy
+
     const dropdown = selected.nextElementSibling;
     const arrow = selected.querySelector(".imagee");
 
     if (dropdown.style.display === "grid" || dropdown.style.display === "block") {
       dropdown.style.display = "none";
-      arrow.style.transform = "rotate(0deg)";
-    }
-     else {
-      dropdown.style.display = "grid"; 
-      arrow.style.transform = "rotate(180deg)";
+      if (arrow) arrow.style.transform = "rotate(0deg)";
+    } else {
+      dropdown.style.display = "grid";
+      if (arrow) arrow.style.transform = "rotate(180deg)";
     }
   });
 });
 
-//  Filter Logic 
+// Filter logic
 document.querySelectorAll('#showinner li').forEach(item => {
   item.addEventListener('click', async function () {
     const selectedText = item.textContent.trim();
     const parentDropdown = item.closest('.dropdown');
+    const showInner = parentDropdown.querySelector('.showinner');
+    const arrow = parentDropdown.querySelector('.imagee');
+    const dropdownList = parentDropdown.querySelector("ul");
     const category = parentDropdown.querySelector('h1').textContent.trim().toLowerCase();
 
-    if (['species', 'status', 'gender'].includes(category)) {
+    if (selectedText.toLowerCase() === 'none') {
+      if (showInner) showInner.textContent = "";
+      if (arrow) arrow.style.transform = 'rotate(0deg)';
+      delete activeFilters[category];
+    } else {
+      if (showInner) showInner.textContent = selectedText;
       activeFilters[category] = selectedText;
-      list.innerHTML = "";
     }
 
-    let matchFound = false; 
+    if (dropdownList) dropdownList.style.display = "none";
+    if (arrow) arrow.style.transform = "rotate(0deg)";
+
+    list.innerHTML = "";
+
+    let matchFound = false;
 
     try {
       for (let page = 1; page <= totalPages; page++) {
@@ -221,20 +231,32 @@ document.querySelectorAll('#showinner li').forEach(item => {
   });
 });
 
-
-// Clear filters and reset 
+// Clear filters and reset everything
 function clearFilters() {
-  const arrow = document.querySelector(".imagee");
-  arrow.style.transform = "rotate(0deg)";
   activeFilters = { species: null, status: null, gender: null };
-   document.querySelectorAll("#showinner").forEach(li => {
-        li.style.display = 'none';
-      });
-      searchInput.value = "";
-      list.innerHTML = "";
-      loadCharactersByPage(1);
+
+  // Reset all arrows
+  document.querySelectorAll(".imagee").forEach(arrow => {
+    arrow.style.transform = "rotate(0deg)";
+  });
+
+  // Clear all showinner texts
+  document.querySelectorAll("#Gender").forEach(show => {
+    show.textContent = "Gender";
+  });
+  document.getElementById('status').innerHTML = "Status";
+  document.getElementById('species').innerHTML = "Species";
+
+  // Hide all dropdown lists
+  document.querySelectorAll(".dropdown ul").forEach(ul => {
+    ul.style.display = "none";
+  });
+
+  searchInput.value = "";
+  list.innerHTML = "";
+  loadCharactersByPage(1);
 }
 
-//  render
+// Render initially
 renderNumberButtons();
 loadCharactersByPage(1);
