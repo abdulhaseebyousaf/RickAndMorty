@@ -30,7 +30,10 @@
         transform: translateX(0);
       }
     }
-
+li.active-filter {
+  background-color: #f97316 !important;
+  color: white;
+}
     @keyframes fadeUp {
       0% {
         opacity: 0;

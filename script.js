@@ -13,7 +13,8 @@ let activeFilters = {
   gender: null
 };
 
-// Show character section
+// Show character
+
 characterButton.addEventListener('click', function () {
   frontpage.style.display = "none";
   secodCharacter.style.display = "flex";
@@ -124,7 +125,7 @@ function renderNumberButtons() {
   for (let i = start; i <= end; i++) {
     const numberDiv = document.createElement('div');
     numberDiv.textContent = i;
-    numberDiv.className = "h-[30px] w-[30px] max-sm:w-[27px] max-sm:h-[27px] rounded-full flex items-center justify-center cursor-pointer text-sm font-semibold bg-orange-500 text-white";
+    numberDiv.className = "h-[30px] w-[30px] hover:bg-slate-500 max-sm:w-[27px] max-sm:h-[27px] rounded-full flex items-center justify-center cursor-pointer text-sm font-semibold bg-orange-500 text-white";
 
     numberDiv.addEventListener('click', () => {
       loadCharactersByPage(i);
@@ -186,19 +187,21 @@ document.querySelectorAll('#showinner li').forEach(item => {
     const arrow = parentDropdown.querySelector('.imagee');
     const dropdownList = parentDropdown.querySelector("ul");
 
+    //  Highlight logic:
+    const allItems = parentDropdown.querySelectorAll('li');
+    allItems.forEach(li => li.classList.remove('active-filter'));
+    item.classList.add('active-filter');
 
     if (dropdownList) dropdownList.style.display = "none";
     if (arrow) arrow.style.transform = "rotate(0deg)";
 
     list.innerHTML = "";
 
-
     if (['species', 'status', 'gender'].includes(category)) {
       activeFilters[category] = selectedText;
-      list.innerHTML = "";
     }
 
-    let matchFound = false; 
+    let matchFound = false;
 
     try {
       for (let page = 1; page <= totalPages; page++) {
@@ -228,28 +231,29 @@ document.querySelectorAll('#showinner li').forEach(item => {
   });
 });
 
-// Clear filters and reset everything
+// Clear filters and back to postion 
 function clearFilters() {
   activeFilters = { species: null, status: null, gender: null };
 
-  // Reset all arrows
   document.querySelectorAll(".imagee").forEach(arrow => {
     arrow.style.transform = "rotate(0deg)";
   });
 
-  // Clear all showinner texts
-  document.querySelectorAll("#Gender").forEach(show => {
-    show.textContent = "Gender";
-  });
-  document.getElementById('status').innerHTML = "Status";
-  document.getElementById('species').innerHTML = "Species";
-
-  // Hide all dropdown lists
   document.querySelectorAll(".dropdown ul").forEach(ul => {
     ul.style.display = "none";
   });
 
+  document.querySelectorAll('li.active-filter').forEach(li => {
+    li.classList.remove('active-filter');
+  });
+
+  
+  document.getElementById('species').textContent = "Species";
+  document.getElementById('status').textContent = "Status";
+  document.getElementById('Gender').textContent = "Gender";
+
   searchInput.value = "";
+
   list.innerHTML = "";
   loadCharactersByPage(1);
 }
