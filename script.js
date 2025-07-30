@@ -32,7 +32,7 @@ let matched = false;
 // Search functionality
 const searchInput = document.getElementById("searchInput");
 const searchButton = document.getElementById("searchButton");
-
+// agr ma oper search kr rha hon us sy mity hoay name show kry
 searchButton.addEventListener('click', async function () {
   const searchTerm = searchInput.value.trim().toLowerCase();
   if (!searchTerm) return;
@@ -60,11 +60,7 @@ searchButton.addEventListener('click', async function () {
   }
 });
 
-searchInput.addEventListener('keypress', function (e) {
-  if (e.key === 'Enter') {
-    searchButton.click();
-  }
-});
+
 
 function displayCharacter(character) {
   const div = document.createElement('div');
@@ -228,8 +224,15 @@ document.querySelectorAll('#showinner li').forEach(item => {
 
 // Clear filters and reset 
 function clearFilters() {
+  const arrow = document.querySelector(".imagee");
+  arrow.style.transform = "rotate(0deg)";
   activeFilters = { species: null, status: null, gender: null };
-  loadCharactersByPage(1);
+   document.querySelectorAll("#showinner").forEach(li => {
+        li.style.display = 'none';
+      });
+      searchInput.value = "";
+      list.innerHTML = "";
+      loadCharactersByPage(1);
 }
 
 //  render
