@@ -17,11 +17,8 @@
         </div>
     </div>
     <!-- showall data krny ka lea -->
-    
-
-    <div id="showAllData" class="w-auto hidden justify-center px-5 max-md:px-28 " >
-        <div>
-  <div id="showdata" class="px-4 py-4 max-w-[1016px]  mt-10 rounded-sm  bg-[#1949775d] shadow-md   mx-auto  flex flex-col max-[733px]:content-center ">
+     <div id="searchdata" class="hidden max-w-[1016px] mx-auto px-5">
+  <div id="showdata" class="px-4 py-4 w-full mt-10 rounded-sm  bg-[#1949775d] shadow-md    flex flex-col max-[733px]:content-center ">
             <h1 class=" text-center text-2xl font-extrabold text-[#1879b9]"> Rick and Morty 826 Characters</h1>
             <!-- for search the 826 character -->
          <div class="flex justify-center items-center gap-x-6  py-5 max-[733px]:flex-col max-[733px]:gap-y-5">
@@ -76,14 +73,18 @@
                 </ul>
             </div> 
             <!-- reset filter -->
-           <div class="dropdown  relative m-[10px] box-border max-[733px]:w-[97%]">
-           <div onclick="restalldata()"  class="border-2 shadow-md bg-[#1c4869] text-teal-600 justify-between flex items-center rounded-xl py-[10px] px-5 cursor-pointer transition-all h-[52px] hover:bg-[#466a79] font-semibold text-xl tracking-widest ">
-                <h1 class="max-sm:text-lg">Reset filter</h1>
+           <div  class="relative m-[10px] box-border max-[733px]:w-[97%]">
+           <div  onclick="clearFilters()"  class="border-2 shadow-md bg-[#1c4869] text-teal-600 justify-between flex items-center rounded-xl py-[10px] px-5 cursor-pointer transition-all h-[52px] hover:bg-[#466a79] font-semibold text-xl tracking-widest ">
+                <h1  class="max-sm:text-lg">Reset filter</h1>
             </div>    
             </div>
             <!--  -->
             </div>
-        </div> 
+        </div>   
+     </div>
+
+    <div id="showAllData" class="w-auto hidden justify-center px-5 max-md:px-28 " >
+        <div>
      
         <ul id="characterList" class="max-w-[1280px] gap-x-3 gap-y-4 mx-auto mt-11  grid grid-cols-4 grid-rows-5 max-lg:grid-cols-3 max-md:grid-cols-2 max-sm:grid-cols-1">
         </ul>

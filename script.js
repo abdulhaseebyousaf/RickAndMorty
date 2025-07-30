@@ -1,15 +1,22 @@
-
 let characterButton = document.getElementById("characater");
 let frontpage = document.getElementById("frontPage");
 let homeButton = document.getElementById("homebutton");
 let secodCharacter = document.getElementById("showAllData");
 let totalPage = 42;
+let searchdata = document.getElementById('searchdata');
 const list = document.getElementById('characterList');
+
+let activeFilters = {
+  species: null,
+  status: null,
+  gender: null
+};
 
 // Show character section
 characterButton.addEventListener('click', function () {
   frontpage.style.display = "none";
   secodCharacter.style.display = "flex";
+  searchdata.style.display = "flex";
   loadCharactersByPage(1);
   renderNumberButtons();
 });
@@ -18,8 +25,10 @@ characterButton.addEventListener('click', function () {
 homeButton.addEventListener('click', function () {
   frontpage.style.display = "flex";
   secodCharacter.style.display = "none";
+  searchdata.style.display = "none";
 });
 
+let matched = false;
 // Search functionality
 const searchInput = document.getElementById("searchInput");
 const searchButton = document.getElementById("searchButton");
@@ -30,7 +39,6 @@ searchButton.addEventListener('click', async function () {
 
   list.innerHTML = "";
   try {
-    let matched = false;
     for (let page = 1; page <= totalPage; page++) {
       const response = await fetch(`https://rickandmortyapi.com/api/character?page=${page}`);
       const data = await response.json();
@@ -90,7 +98,6 @@ function displayCharacter(character) {
 // Load characters by page
 function loadCharactersByPage(pageNumber) {
   list.innerHTML = "";
-
   fetch(`https://rickandmortyapi.com/api/character?page=${pageNumber}`)
     .then(res => res.json())
     .then(data => {
@@ -102,8 +109,6 @@ function loadCharactersByPage(pageNumber) {
       console.error("Failed to fetch characters:", err);
     });
 }
-// for hidden main
-const  inmain =document.getElementById('choose');
 // Pagination logic
 const numberContainer = document.getElementById('numbers');
 const numberArrow = document.getElementById('lastArrow');
@@ -127,7 +132,6 @@ function renderNumberButtons() {
 
     numberDiv.addEventListener('click', () => {
       loadCharactersByPage(i);
-      highlightActive(numberDiv);
     });
 
     numberContainer.insertBefore(numberDiv, dots);
@@ -136,17 +140,6 @@ function renderNumberButtons() {
   numberArrow.style.display = end < totalPages ? 'grid' : 'none';
   dots.style.display = end < totalPages ? 'grid' : 'none';
 }
-
-function highlightActive(activeButton) {
-  const allButtons = numberContainer.querySelectorAll('div');
-  allButtons.forEach(btn => {
-    btn.classList.remove('bg-orange-700');
-    btn.classList.add('bg-orange-500');
-  });
-  activeButton.classList.remove('bg-orange-500');
-  activeButton.classList.add('bg-orange-700');
-}
-
 numberArrow.addEventListener('click', () => {
   if ((currentSet + 1) * buttonsPerSet < totalPages) {
     currentSet++;
@@ -161,48 +154,48 @@ firstArrow.addEventListener('click', () => {
   }
 });
 
-// Dropdown filter toggles
 let selectedItems = document.querySelectorAll(".selected");
+
 selectedItems.forEach(selected => {
   selected.addEventListener("click", function () {
-    document.querySelectorAll(".showinner").forEach(drop => {
-      if (drop !== selected.nextElementSibling) {
-        drop.style.display = "none";
+
+    // Pehle sab dropdowns close han
+    selectedItems.forEach(item => {
+      const dropdown = item.nextElementSibling;
+      const arrow = item.querySelector(".imagee");
+      if (item !== selected) {
+        dropdown.style.display = "none";
+        if (arrow) arrow.style.transform = "rotate(0deg)";
       }
     });
-
-    document.querySelectorAll(".imagee").forEach(img => {
-      if (img !== selected.querySelector(".imagee")) {
-        img.style.transform = "rotate(0deg)";
-      }
-    });
-
+    // Ab current dropdown toggle karen gy
     const dropdown = selected.nextElementSibling;
     const arrow = selected.querySelector(".imagee");
 
     if (dropdown.style.display === "grid" || dropdown.style.display === "block") {
       dropdown.style.display = "none";
       arrow.style.transform = "rotate(0deg)";
-    } else {
-      dropdown.style.display = "grid";
+    }
+     else {
+      dropdown.style.display = "grid"; 
       arrow.style.transform = "rotate(180deg)";
     }
   });
 });
 
-// Filter logic for dropdown <li> clicks
+//  Filter Logic 
 document.querySelectorAll('#showinner li').forEach(item => {
   item.addEventListener('click', async function () {
     const selectedText = item.textContent.trim();
     const parentDropdown = item.closest('.dropdown');
-    const category = parentDropdown.querySelector('h1').textContent.trim();
+    const category = parentDropdown.querySelector('h1').textContent.trim().toLowerCase();
 
-    let filterKey = '';
-    if (category === 'Species') filterKey = 'species';
-    if (category === 'Status') filterKey = 'status';
-    if (category === 'Gender') filterKey = 'gender';
+    if (['species', 'status', 'gender'].includes(category)) {
+      activeFilters[category] = selectedText;
+      list.innerHTML = "";
+    }
 
-    list.innerHTML = "";
+    let matchFound = false; 
 
     try {
       for (let page = 1; page <= totalPages; page++) {
@@ -211,24 +204,34 @@ document.querySelectorAll('#showinner li').forEach(item => {
         const characters = data.results;
 
         characters.forEach(character => {
-          if (character[filterKey].toLowerCase() === selectedText.toLowerCase()) {
-            
+          const matchSpecies = !activeFilters.species || character.species.toLowerCase() === activeFilters.species.toLowerCase();
+          const matchStatus = !activeFilters.status || character.status.toLowerCase() === activeFilters.status.toLowerCase();
+          const matchGender = !activeFilters.gender || character.gender.toLowerCase() === activeFilters.gender.toLowerCase();
+
+          if (matchSpecies && matchStatus && matchGender) {
+            matchFound = true;
             displayCharacter(character);
           }
         });
       }
+
+      if (!matchFound) {
+        list.innerHTML = "<p class='text-xl text-red-600 font-bold'>No characters found with that name.</p>";
+      }
+
     } catch (err) {
       console.error("Filtering error:", err);
     }
   });
 });
-function restalldata(){
-renderNumberButtons();
-loadCharactersByPage(1);  
 
+
+// Clear filters and reset 
+function clearFilters() {
+  activeFilters = { species: null, status: null, gender: null };
+  loadCharactersByPage(1);
 }
 
-// Initial render
+//  render
 renderNumberButtons();
 loadCharactersByPage(1);
-
