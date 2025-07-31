@@ -49,19 +49,21 @@ function loadCharactersByPage(pageNumber) {
 }
 
 // Search functionality
+// if search fast its not working fix this
 const searchInput = document.getElementById("searchInput");
 const searchButton = document.getElementById("searchButton");
 
 searchInput.addEventListener('input', async function () {
   const searchTerm = searchInput.value.trim().toLowerCase();
-  if (searchTerm === "" || searchTerm.length <= 0) {
-     loadCharactersByPage(1);
-  renderNumberButtons(); document.getElementById('numbers').style.display = "flex";
+  if (searchTerm === "" || searchTerm.length <= "") {
+    loadCharactersByPage(1);
+    renderNumberButtons();
+    document.getElementById('numbers').style.display = "flex";
     return;
   }
   list.innerHTML = "";
-  let matched = false;
 
+  let allMatchedCharacters = [];
   try {
     for (let page = 1; page <= totalPage; page++) {
       const response = await fetch(`https://rickandmortyapi.com/api/character?page=${page}`);
@@ -70,18 +72,132 @@ searchInput.addEventListener('input', async function () {
 
       characters.forEach(character => {
         if (character.name.toLowerCase().includes(searchTerm)) {
-          matched = true;
-          displayCharacter(character);
+          allMatchedCharacters.push(character);
         }
       });
     }
 
-    if (!matched) {
+    const itemsPerPage = 20;
+    let searchPage = 1;
+    const totalSearchPages = Math.ceil(allMatchedCharacters.length / itemsPerPage);
+
+    function renderSearchPage(page) {
+      list.innerHTML = "";
+      const start = (page - 1) * itemsPerPage;
+      const end = start + itemsPerPage;
+      const pageCharacters = allMatchedCharacters.slice(start, end);
+      pageCharacters.forEach(displayCharacter);
+
+      if (allMatchedCharacters.length > itemsPerPage) {
+        document.getElementById('numbers').style.display = "flex";
+      } else {
+        document.getElementById('numbers').style.display = "none";
+      }
+    }
+
+    function renderSearchPagination() {
+      numberContainer.innerHTML = "";
+
+      // Left arrow
+      const leftBtn = document.createElement('button');
+      leftBtn.id = "firstArrow";
+      leftBtn.type = "button";
+      leftBtn.className = "w-[30px] h-[30px] max-sm:w-[27px] max-sm:h-[27px] hover:bg-slate-500 rounded-[10px] flex items-center justify-center font-extrabold bg-red-700 cursor-pointer";
+      leftBtn.innerHTML = `<img class="rotate-90 w-4" src="/images/downChevron.png" alt="error" />`;
+      leftBtn.onclick = () => {
+        if (searchPage > 1) {
+          searchPage--;
+          renderSearchPage(searchPage);
+          renderSearchPagination();
+        }
+      };
+      numberContainer.appendChild(leftBtn);
+
+      // Helper to create a page button
+      function createPageBtn(page) {
+        const btn = document.createElement('div');
+        btn.textContent = page;
+        btn.className = `blue h-[30px] w-[30px] hover:bg-slate-500 max-sm:w-[27px] max-sm:h-[27px] rounded-full flex items-center justify-center cursor-pointer text-sm font-semibold ${
+          page === searchPage ? 'bg-blue-600 text-white' : 'bg-orange-500 text-white'
+        }`;
+        btn.onclick = () => {
+          searchPage = page;
+          renderSearchPage(searchPage);
+          renderSearchPagination();
+        };
+        return btn;
+      }
+
+      // Always show first page
+      numberContainer.appendChild(createPageBtn(1));
+
+      // Show left dots if needed
+      if (searchPage > 4) {
+        const leftDots = document.createElement('div');
+        leftDots.textContent = '...';
+        leftDots.className = 'h-[30px] w-[30px] hover:bg-slate-500 rounded-full flex items-center justify-center text-sm font-semibold max-sm:w-[27px] max-sm:h-[27px] bg-orange-500 text-white';
+        numberContainer.appendChild(leftDots);
+      }
+
+      // Calculate range to show around searchPage
+      let start = Math.max(2, searchPage - 1);
+      let end = Math.min(totalSearchPages - 1, searchPage + 1);
+
+      if (searchPage <= 3) {
+        start = 2;
+        end = 4;
+      }
+      if (searchPage >= totalSearchPages - 2) {
+        start = totalSearchPages - 3;
+        end = totalSearchPages - 1;
+      }
+
+      for (let i = start; i <= end; i++) {
+        if (i > 1 && i < totalSearchPages) {
+          numberContainer.appendChild(createPageBtn(i));
+        }
+      }
+
+      // Show right dots
+      if (searchPage < totalSearchPages - 2) {
+        const rightDots = document.createElement('div');
+        rightDots.textContent = '...';
+        rightDots.className = 'h-[30px] w-[30px] hover:bg-slate-500 rounded-full flex items-center justify-center text-sm font-semibold max-sm:w-[27px] max-sm:h-[27px] bg-orange-500 text-white';
+        numberContainer.appendChild(rightDots);
+      }
+
+      // Always show last page if more than 1
+      if (totalSearchPages > 1) {
+        numberContainer.appendChild(createPageBtn(totalSearchPages));
+      }
+
+      // Right arrow
+      const rightBtn = document.createElement('button');
+      rightBtn.id = "lastArrow";
+      rightBtn.type = "button";
+      rightBtn.className = "w-[30px] hover:bg-slate-500 h-[30px] rounded-[10px] max-sm:w-[27px] max-sm:h-[27px] flex items-center justify-center font-extrabold bg-red-700 cursor-pointer";
+      rightBtn.innerHTML = `<img class="rotate-[273deg] w-4" src="/images/downChevron.png" alt="error" />`;
+      rightBtn.onclick = () => {
+        if (searchPage < totalSearchPages) {
+          searchPage++;
+          renderSearchPage(searchPage);
+          renderSearchPagination();
+        }
+      };
+      numberContainer.appendChild(rightBtn);
+    }
+
+    if (allMatchedCharacters.length === 0) {
       list.innerHTML = "<p class='text-xl text-red-600 font-bold'>No characters found with that name.</p>";
       document.getElementById('numbers').style.display = "none";
     } else {
-      document.getElementById('numbers').style.display = "flex";
-      currentPage = 1;
+      searchPage = 1;
+      renderSearchPage(searchPage);
+      if (allMatchedCharacters.length > itemsPerPage) {
+        renderSearchPagination();
+      } else {
+        document.getElementById('numbers').style.display = "none";
+      }
     }
   } catch (error) {
     console.error("Search error:", error);
@@ -164,7 +280,6 @@ function renderNumberButtons() {
   // Calculate range to show around currentPage
   let start = Math.max(2, currentPage - 1);
   let end = Math.min(totalPages - 1, currentPage + 1);
-
   // Adjust if near start or end
   if (currentPage <= 3) {
     start = 2;
@@ -188,13 +303,11 @@ function renderNumberButtons() {
     rightDots.className = 'h-[30px] w-[30px] hover:bg-slate-500 rounded-full flex items-center justify-center text-sm font-semibold max-sm:w-[27px] max-sm:h-[27px] bg-orange-500 text-white';
     numberContainer.insertBefore(rightDots, numberArrow);
   }
-
   // Always show last page if more than 1
   if (totalPages > 1) {
     numberContainer.insertBefore(createPageBtn(totalPages), numberArrow);
   }
 }
-
 
 numberArrow.addEventListener('click', () => {
   if (currentPage < totalPages) {
