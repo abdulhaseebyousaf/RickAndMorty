@@ -21,7 +21,6 @@ let activeFilters = {
 };
 
 // Show character
-
 characterButton.addEventListener('click', function () {
   frontpage.style.display = "none";
   secodCharacter.style.display = "flex";
@@ -30,12 +29,10 @@ characterButton.addEventListener('click', function () {
   loadCharactersByPage(1);
   renderNumberButtons();
 });
-
 // Show home page
 homeButton.addEventListener('click', function () {
   location.reload();
 });
-
 // Load characters by page
 function loadCharactersByPage(pageNumber) {
   list.innerHTML = "";
@@ -57,14 +54,11 @@ const searchButton = document.getElementById("searchButton");
 
 searchInput.addEventListener('input', async function () {
   const searchTerm = searchInput.value.trim().toLowerCase();
-  // If search input is empty, show first page and pagination
-  if (searchTerm === "") {
-    list.innerHTML = "";
-    loadCharactersByPage(1);
-    document.getElementById('numbers').style.display = "flex";
+  if (searchTerm === "" || searchTerm.length <= 0) {
+     loadCharactersByPage(1);
+  renderNumberButtons(); document.getElementById('numbers').style.display = "flex";
     return;
   }
-
   list.innerHTML = "";
   let matched = false;
 
@@ -85,10 +79,9 @@ searchInput.addEventListener('input', async function () {
     if (!matched) {
       list.innerHTML = "<p class='text-xl text-red-600 font-bold'>No characters found with that name.</p>";
       document.getElementById('numbers').style.display = "none";
-    }
-    else {
+    } else {
       document.getElementById('numbers').style.display = "flex";
-      currentPage = 1; 
+      currentPage = 1;
     }
   } catch (error) {
     console.error("Search error:", error);
@@ -127,12 +120,21 @@ function displayCharacter(character) {
 }
 
 
-// Pagination logic if the chaharacter is more than 20 then it will show the pagination
+// Pagination logic 
 function renderNumberButtons() {
   // Clear all except arrows
   [...numberContainer.querySelectorAll('div')].forEach(btn => {
     if (btn !== numberArrow && btn !== firstArrow) btn.remove();
   });
+  
+  if (!numberContainer.contains(firstArrow)) {
+    numberContainer.insertBefore(firstArrow, numberContainer.firstChild);
+    document.getElementById('firstArrow').style.display = "none";
+  }
+  if (!numberContainer.contains(numberArrow)) {
+    numberContainer.appendChild(numberArrow);
+    document.getElementById('lastArrow').style.display = "none";
+  }
   // Helper to create a page button
   function createPageBtn(page) {
     const btn = document.createElement('div');
@@ -244,7 +246,7 @@ document.querySelectorAll('#showinner li').forEach(item => {
     const arrow = parentDropdown.querySelector('.imagee');
     const dropdownList = parentDropdown.querySelector("ul");
 
-    // Highlight logic:
+  
     const allItems = parentDropdown.querySelectorAll('li');
     allItems.forEach(li => li.classList.remove('active-filter'));
     item.classList.add('active-filter');
@@ -426,7 +428,9 @@ function clearFilters() {
   document.getElementById('Gender').textContent = "Gender";
 
   searchInput.value = "";
-
+  document.getElementById('numbers').style.display = "flex";
+  currentPage = 1;
+  renderNumberButtons();
   list.innerHTML = "";
   loadCharactersByPage(1);
 }
