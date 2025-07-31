@@ -10,11 +10,67 @@
     <script src="https://cdn.jsdelivr.net/npm/@tailwindcss/browser@4"></script>
     <link rel="stylesheet" href="style.css">
 </head>
+<style>
+  .btn-primary {
+  place-items: center;
+  border-radius: 0.75em;
+  text-decoration: none;
+  transition: all 0.25s ease-in-out;
+  box-shadow: inset 0 0 0 1px black, 0 0 0 2px #3a3d40,
+    0 0 0 4px rgba(0, 0, 0, 0.25), 0 11px 27px -5px rgba(0, 0, 0, 0.53),
+    0 25px 25px -4px rgba(0, 0, 0, 0.35);
+
+  background-image: radial-gradient(
+      227.71% 180.23% at 90.64% 130.38%,
+      rgb(17, 20, 23) 0%,
+      rgb(55, 59, 63) 100%
+    ),
+    radial-gradient(
+      207.84% 121.69% at -5.69% 111.39%,
+      rgb(17, 20, 23) 0%,
+      rgb(55, 59, 63) 100%
+    ),
+    linear-gradient(
+      206deg,
+      rgba(123, 134, 151, 0.2) 0%,
+      rgba(25, 27, 30, 0.2) 100%
+    ),
+    linear-gradient(180deg, rgba(0, 0, 0, 0.2) 0%, rgba(0, 0, 0, 0.2) 100%);
+
+  span {
+    background-image: linear-gradient(69deg, #d1d1d1 0%, #828282 100%);
+    background-clip: text;
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    text-shadow: 0 2px 1px rgba(0, 0, 0, 0.125);
+    transition: all 0.25s ease-in-out;
+  }
+
+  &:active {
+    transform: translateY(2px);
+    box-shadow: inset 0 0 0 1px black, 0 0 0 2px #3a3d40,
+      0 0 0 4px rgba(0, 0, 0, 0.25), 0 4px 12px -5px rgba(0, 0, 0, 0.53),
+      0 6px 6px -4px rgba(0, 0, 0, 0.35);
+    transition: all 0.25s ease-in-out;
+    span {
+      background-image: linear-gradient(69deg, #dbd56e 0%, #edeab5 100%);
+      background-clip: text;
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+      font-weight: 400;
+      text-shadow: 0 2px 1px rgba(0, 0, 0, 0.125);
+    }
+  }
+}
+</style>
 <body class="bg-gradient-to-br from-[#0f0c29] via-[#302b63] to-[#24243e] min-h-screen">
-        <div class="w-full h-auto flex justify-end bg-gradient-to-br from-[#0f0c29] via-[#302b63] to-[#202031] shadow-sm ">
+      
+  <div class="w-full h-auto flex justify-end bg-gradient-to-br from-[#0f0c29] via-[#433b96] to-[#202031] max-[425px]:justify-center shadow-sm ">
         <div class="my-2">
-            <button id="homebutton" class="  cursor-pointer px-6 py-4 font-bold tracking-wide bg-slate-200 active:scale-95 hover:text-white rounded-lg  duration-300 transition-all hover:bg-slate-500" type="button">Home</button>
-            <button id="characater" class="px-4 py-4 font-bold active:scale-95 duration-300 transition-all hover:bg-slate-400 mx-8 hover:text-white cursor-pointer tracking-wide bg-slate-200  rounded-lg" type="button">Characters</button>
+            <button id="homebutton" class="btn-primary max-sm:px-3 max-sm:py-3 cursor-pointer px-6 py-4 font-bold tracking-wide "type="button"><span>Home</span></button>
+            <button id="characater" class="btn-primary max-sm:px-3 max-sm:py-3  px-4 py-4 active:scale-95 max-[425px]:ml-4 max-[425px]:mx-0 duration-300 transition-all cursor-pointer mx-8" type="button">
+              <span class="font-bold" >Characters</span>
+            </button>
         </div>
     </div>
     <!-- showall data krny ka lea -->
@@ -27,7 +83,7 @@
          class="bg-white text-slate-400 border-2 border-cyan-600 rounded-lg outline-none font-bold 
          placeholder:text-xl placeholder:font-semibold w-1/2 placeholder:text-[#90a1b9] p-3 max-[733px]:w-[97%] max-sm:placeholder:text-base" />
   <button id="searchButton" type="submit" 
-          class=" w-[15%] max-[733px]:w-[97%] border-2 cursor-pointer box-border border-[#1c4869] bg-[#1c4869] text-teal-700 ]  hover:bg-[#466a79] transition-all duration-300 active:scale-95 max-sm:text-lg  max-sm:font-bold max-sm:h-11
+          class=" w-[15%] max-[733px]:w-[97%] border-2 cursor-pointer box-border border-[#1c4869] bg-[#1c4869] text-teal-700  hover:text-[#1bc299] hover:bg-[#466a79] transition-all duration-300 active:scale-95 max-sm:text-lg  max-sm:font-bold max-sm:h-11
   outline-none rounded-lg text-2xl font-semibold h-[50px]">
     Submit
   </button>
@@ -35,8 +91,8 @@
             <!-- for second search -->
             <div class=" justify-center  flex flex-wrap items-center max-[733px]:flex-col max-[733px]:content-center ">
             <div class="dropdown w-[24%]  relative m-[10px] box-border max-[733px]:w-[97%]">
-            <div  class="selected border-2 shadow-md bg-[#1c4869] text-teal-600 justify-between flex items-center rounded-xl py-[10px] px-5 cursor-pointer transition-all hover:bg-[#466a79] max-sm:font-bold font-semibold text-xl tracking-widest">
-                <h1 id="species" class="showinner max-sm:text-lg" >Species</h1>
+            <div  class="selected border-2 shadow-md bg-[#1c4869] text-teal-600 justify-between flex items-center rounded-xl py-[10px] px-5 cursor-pointer transition-all hover:bg-[#466a79] hover:text-[#1bc299] max-sm:font-bold font-semibold text-xl tracking-widest">
+                <h1 id="species" class="showinner  max-sm:text-lg" >Species</h1>
                 <img class="imagee w-3 rotate-0" src="images/downChevron.png" alt="error">
             </div>   
             <ul id="showinner" class=" px-2 py-[3.2px] hidden border absolute  border-[#1c4869] bg-[#1c4869] text-teal-700 transition-all duration-300  font-semibold tracking-wide z-[2000] w-full h-[165px] rounded-sm overflow-y-scroll">
@@ -52,7 +108,7 @@
             </div>  
               <!--second  -->
               <div class="dropdown w-[24%] relative m-[10px] box-border max-[733px]:w-[97%]">
-            <div  class="selected border-2 shadow-md bg-[#1c4869] text-teal-600 justify-between flex items-center rounded-xl py-[10px] px-5 cursor-pointer transition-all hover:bg-[#466a79] h-[52px] font-semibold text-xl tracking-widest">
+            <div  class="selected border-2 shadow-md bg-[#1c4869] text-teal-600 justify-between flex items-center rounded-xl py-[10px] px-5 cursor-pointer transition-all hover:bg-[#466a79] hover:text-[#1bc299] h-[52px] font-semibold text-xl tracking-widest">
                 <h1 id="status" class="showinner max-sm:text-lg ">Status</h1>
                 <img class="imagee w-3 rotate-0" src="images/downChevron.png" alt="error">
             </div>    
@@ -63,7 +119,7 @@
             </div>
             <!-- third -->
             <div class="dropdown w-[24%] relative m-[10px] box-border max-[733px]:w-[97%]">
-            <div  class="selected border-2 shadow-md bg-[#1c4869] text-teal-600 justify-between flex items-center rounded-xl py-[10px] px-5 cursor-pointer transition-all hover:bg-[#466a79] h-[52px] font-semibold text-xl tracking-widest">
+            <div  class="selected border-2 shadow-md bg-[#1c4869] text-teal-600 justify-between flex items-center rounded-xl py-[10px] px-5 cursor-pointer transition-all hover:bg-[#466a79] hover:text-[#1bc299] h-[52px] font-semibold text-xl tracking-widest">
                 <h1 id="Gender" class="showinner max-sm:text-lg ">Gender</h1>
                 <img class="imagee w-3 rotate-0" src="images/downChevron.png" alt="error">
             </div>    
@@ -75,7 +131,7 @@
             </div> 
             <!-- reset filter -->
            <div  class="relative m-[10px] box-border max-[733px]:w-[97%]">
-           <div  onclick="clearFilters()"  class="border-2 shadow-md bg-[#1c4869] text-teal-600 justify-between flex items-center rounded-xl py-[10px] px-5 cursor-pointer transition-all h-[52px] hover:bg-[#466a79] font-semibold text-xl tracking-widest ">
+           <div  onclick="clearFilters()"  class="border-2 shadow-md bg-[#1c4869] text-teal-600 justify-between flex items-center rounded-xl py-[10px] px-5 cursor-pointer transition-all hover:text-[#1bc299] h-[52px] hover:bg-[#466a79] font-semibold text-xl tracking-widest ">
                 <h1  class="max-sm:text-lg">Reset filter</h1>
             </div>    
             </div>

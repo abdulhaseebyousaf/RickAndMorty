@@ -6,6 +6,7 @@ border-style: dashed !important;
 border-width: 2px !important;
 }
 
+
     }
 @keyframes slideFadeInLeft {
       0% {
@@ -40,8 +41,8 @@ border-width: 2px !important;
       }
     }
 li.active-filter {
-  background-color: #f97316 !important;
-  color: white;
+  background-color: #112743fc !important;
+    color: #1bc299;
 }
     @keyframes fadeUp {
       0% {
@@ -96,7 +97,7 @@ li.active-filter {
     } 
 
 .characterdata {
-  background-color:#348acc;
+background-image: linear-gradient(to right, #558181, #2d81a8);
   padding: 25px;
   border-radius: 19px;
 animation: fadeInCenter 1s ease forwards;
@@ -112,23 +113,28 @@ background-color: rgba(10, 156, 201, 0.877);
 color: honeydew;
 transition:ease-in-out all 400ms; 
 }
-
+.characterdata:hover {
+background-image: linear-gradient(to right, #20696975, #2d62a896);
+transition: ease-in-out all 400ms;
+  box-shadow: 0 0 20px rgba(0, 0, 0, 0.5);
+}
 .textdata {
 font-family: "Rubik", sans-serif;
 font-size: large;
 font-weight: 600;
 font-style: oblique;
 padding-top:15px;
-color: rgba(2, 14, 119, 0.993);
+text-shadow: #1111118f 1px 1px 0px;
+color: lch(82.72% 44.1 217.49);
 }
 .characterdata img {
 margin-right: auto;
 margin-left:auto;
 width: 180px;
 border-radius: 100%;
-border-width: 2px;
-border-collapse: collapse;
-border-color: black;
+border-width: 3px;
+border-style:  dashed ;
+border-color: rgba(25, 42, 48, 0.521);
 object-fit: cover;
 }
 .menu {
