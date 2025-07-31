@@ -7,6 +7,13 @@ let searchdata = document.getElementById('searchdata');
 const list = document.getElementById('characterList');
 let bottom = document.getElementById('bottom');
 
+const numberContainer = document.getElementById('numbers');
+const numberArrow = document.getElementById('lastArrow');
+const firstArrow = document.getElementById('firstArrow');
+const dots = document.getElementById('dots');
+const totalPages = 42;
+let currentPage = 1;
+
 let activeFilters = {
   species: null,
   status: null,
@@ -29,16 +36,37 @@ homeButton.addEventListener('click', function () {
   location.reload();
 });
 
+// Load characters by page
+function loadCharactersByPage(pageNumber) {
+  list.innerHTML = "";
+  fetch(`https://rickandmortyapi.com/api/character?page=${pageNumber}`)
+    .then(res => res.json())
+    .then(data => {
+      data.results.forEach(character => {
+        displayCharacter(character);
+      });
+    })
+    .catch(err => {
+      console.error("Failed to fetch characters:", err);
+    });
+}
+
 // Search functionality
 const searchInput = document.getElementById("searchInput");
 const searchButton = document.getElementById("searchButton");
 
-searchButton.addEventListener('click', async function () {
+searchInput.addEventListener('input', async function () {
   const searchTerm = searchInput.value.trim().toLowerCase();
-  if (!searchTerm) return;
+  // If search input is empty, show first page and pagination
+  if (searchTerm === "") {
+    list.innerHTML = "";
+    loadCharactersByPage(1);
+    document.getElementById('numbers').style.display = "flex";
+    return;
+  }
 
   list.innerHTML = "";
-  let matched = false; // reset for every search
+  let matched = false;
 
   try {
     for (let page = 1; page <= totalPage; page++) {
@@ -56,11 +84,18 @@ searchButton.addEventListener('click', async function () {
 
     if (!matched) {
       list.innerHTML = "<p class='text-xl text-red-600 font-bold'>No characters found with that name.</p>";
+      document.getElementById('numbers').style.display = "none";
+    }
+    else {
+      document.getElementById('numbers').style.display = "flex";
+      currentPage = 1; 
     }
   } catch (error) {
     console.error("Search error:", error);
   }
 });
+
+
 
 function displayCharacter(character) {
   const div = document.createElement('div');
@@ -91,29 +126,8 @@ function displayCharacter(character) {
   list.appendChild(div);
 }
 
-// Load characters by page
-function loadCharactersByPage(pageNumber) {
-  list.innerHTML = "";
-  fetch(`https://rickandmortyapi.com/api/character?page=${pageNumber}`)
-    .then(res => res.json())
-    .then(data => {
-      data.results.forEach(character => {
-        displayCharacter(character);
-      });
-    })
-    .catch(err => {
-      console.error("Failed to fetch characters:", err);
-    });
-}
 
-// Pagination logic 
-const numberContainer = document.getElementById('numbers');
-const numberArrow = document.getElementById('lastArrow');
-const firstArrow = document.getElementById('firstArrow');
-const dots = document.getElementById('dots');
-const totalPages = 42;
-let currentPage = 1;
-
+// Pagination logic if the chaharacter is more than 20 then it will show the pagination
 function renderNumberButtons() {
   // Clear all except arrows
   [...numberContainer.querySelectorAll('div')].forEach(btn => {
@@ -177,8 +191,8 @@ function renderNumberButtons() {
   if (totalPages > 1) {
     numberContainer.insertBefore(createPageBtn(totalPages), numberArrow);
   }
-
 }
+
 
 numberArrow.addEventListener('click', () => {
   if (currentPage < totalPages) {
@@ -187,7 +201,6 @@ numberArrow.addEventListener('click', () => {
     renderNumberButtons();
   }
 });
-
 firstArrow.addEventListener('click', () => {
   if (currentPage > 1) {
     currentPage--;
@@ -231,7 +244,7 @@ document.querySelectorAll('#showinner li').forEach(item => {
     const arrow = parentDropdown.querySelector('.imagee');
     const dropdownList = parentDropdown.querySelector("ul");
 
-    //  Highlight logic:
+    // Highlight logic:
     const allItems = parentDropdown.querySelectorAll('li');
     allItems.forEach(li => li.classList.remove('active-filter'));
     item.classList.add('active-filter');
@@ -245,7 +258,7 @@ document.querySelectorAll('#showinner li').forEach(item => {
       activeFilters[category] = selectedText;
     }
 
-    let matchFound = false;
+    let filteredCharacters = [];
 
     try {
       for (let page = 1; page <= totalPages; page++) {
@@ -259,14 +272,132 @@ document.querySelectorAll('#showinner li').forEach(item => {
           const matchGender = !activeFilters.gender || character.gender.toLowerCase() === activeFilters.gender.toLowerCase();
 
           if (matchSpecies && matchStatus && matchGender) {
-            matchFound = true;
-            displayCharacter(character);
+            filteredCharacters.push(character);
           }
         });
       }
 
-      if (!matchFound) {
-        list.innerHTML = "<p class='text-xl text-red-600 font-bold'>No characters found with that name.</p>";
+      // Pagination for filtered results
+      const itemsPerPage = 20;
+      let filterPage = 1;
+
+      function renderFilteredPage(page) {
+        list.innerHTML = "";
+        const start = (page - 1) * itemsPerPage;
+        const end = start + itemsPerPage;
+        const pageCharacters = filteredCharacters.slice(start, end);
+        pageCharacters.forEach(displayCharacter);
+
+        // Show/hide pagination
+        if (filteredCharacters.length > itemsPerPage) {
+          document.getElementById('numbers').style.display = "flex";
+        } else {
+          document.getElementById('numbers').style.display = "none";
+        }
+      }
+
+      // Custom pagination for filtered results (with ... and arrows)
+      function renderFilteredPagination() {
+        numberContainer.innerHTML = "";
+
+        // Left arrow
+        const leftBtn = document.createElement('button');
+        leftBtn.id = "firstArrow";
+        leftBtn.type = "button";
+        leftBtn.className = "w-[30px] h-[30px] max-sm:w-[27px] max-sm:h-[27px] hover:bg-slate-500 rounded-[10px] flex items-center justify-center font-extrabold bg-red-700 cursor-pointer";
+        leftBtn.innerHTML = `<img class="rotate-90 w-4" src="/images/downChevron.png" alt="error" />`;
+        leftBtn.onclick = () => {
+          if (filterPage > 1) {
+            filterPage--;
+            renderFilteredPage(filterPage);
+            renderFilteredPagination();
+          }
+        };
+        numberContainer.appendChild(leftBtn);
+
+        const totalFilteredPages = Math.ceil(filteredCharacters.length / itemsPerPage);
+
+        // Helper to create a page button
+        function createPageBtn(page) {
+          const btn = document.createElement('div');
+          btn.textContent = page;
+          btn.className = `blue h-[30px] w-[30px] hover:bg-slate-500 max-sm:w-[27px] max-sm:h-[27px] rounded-full flex items-center justify-center cursor-pointer text-sm font-semibold ${
+            page === filterPage ? 'bg-blue-600 text-white' : 'bg-orange-500 text-white'
+          }`;
+          btn.onclick = () => {
+            filterPage = page;
+            renderFilteredPage(filterPage);
+            renderFilteredPagination();
+          };
+          return btn;
+        }
+
+        // Always show first page
+        numberContainer.appendChild(createPageBtn(1));
+
+        // Show left dots if needed
+        if (filterPage > 4) {
+          const leftDots = document.createElement('div');
+          leftDots.textContent = '...';
+          leftDots.className = 'h-[30px] w-[30px] hover:bg-slate-500 rounded-full flex items-center justify-center text-sm font-semibold max-sm:w-[27px] max-sm:h-[27px] bg-orange-500 text-white';
+          numberContainer.appendChild(leftDots);
+        }
+
+        // Calculate range to show around filterPage
+        let start = Math.max(2, filterPage - 1);
+        let end = Math.min(totalFilteredPages - 1, filterPage + 1);
+
+        if (filterPage <= 3) {
+          start = 2;
+          end = 4;
+        }
+        if (filterPage >= totalFilteredPages - 2) {
+          start = totalFilteredPages - 3;
+          end = totalFilteredPages - 1;
+        }
+
+        for (let i = start; i <= end; i++) {
+          if (i > 1 && i < totalFilteredPages) {
+            numberContainer.appendChild(createPageBtn(i));
+          }
+        }
+
+        // Show right dots
+        if (filterPage < totalFilteredPages - 2) {
+          const rightDots = document.createElement('div');
+          rightDots.textContent = '...';
+          rightDots.className = 'h-[30px] w-[30px] hover:bg-slate-500 rounded-full flex items-center justify-center text-sm font-semibold max-sm:w-[27px] max-sm:h-[27px] bg-orange-500 text-white';
+          numberContainer.appendChild(rightDots);
+        }
+
+        // Always show last page if more than 1
+        if (totalFilteredPages > 1) {
+          numberContainer.appendChild(createPageBtn(totalFilteredPages));
+        }
+
+        // Right arrow
+        const rightBtn = document.createElement('button');
+        rightBtn.id = "lastArrow";
+        rightBtn.type = "button";
+        rightBtn.className = "w-[30px] hover:bg-slate-500 h-[30px] rounded-[10px] max-sm:w-[27px] max-sm:h-[27px] flex items-center justify-center font-extrabold bg-red-700 cursor-pointer";
+        rightBtn.innerHTML = `<img class="rotate-[273deg] w-4" src="/images/downChevron.png" alt="error" />`;
+        rightBtn.onclick = () => {
+          if (filterPage < totalFilteredPages) {
+            filterPage++;
+            renderFilteredPage(filterPage);
+            renderFilteredPagination();
+          }
+        };
+        numberContainer.appendChild(rightBtn);
+      }
+
+      if (filteredCharacters.length === 0) {
+        list.innerHTML = "<p class='text-xl text-red-600 font-bold'>No characters found with that filter.</p>";
+        document.getElementById('numbers').style.display = "none";
+      } else {
+        filterPage = 1;
+        renderFilteredPage(filterPage);
+        renderFilteredPagination();
       }
 
     } catch (err) {
@@ -289,7 +420,6 @@ function clearFilters() {
   document.querySelectorAll('li.active-filter').forEach(li => {
     li.classList.remove('active-filter');
   });
-
   
   document.getElementById('species').textContent = "Species";
   document.getElementById('status').textContent = "Status";
