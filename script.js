@@ -106,48 +106,92 @@ function loadCharactersByPage(pageNumber) {
     });
 }
 
-// Pagination logic
+// Pagination logic 
 const numberContainer = document.getElementById('numbers');
 const numberArrow = document.getElementById('lastArrow');
 const firstArrow = document.getElementById('firstArrow');
 const dots = document.getElementById('dots');
 const totalPages = 42;
-const buttonsPerSet = 5;
-let currentSet = 0;
+let currentPage = 1;
 
 function renderNumberButtons() {
-  const existingButtons = [...numberContainer.querySelectorAll('div')].filter(el => el !== dots);
-  existingButtons.forEach(btn => btn.remove());
-
-  const start = currentSet * buttonsPerSet + 1;
-  const end = Math.min(start + buttonsPerSet - 1, totalPages);
-
-  for (let i = start; i <= end; i++) {
-    const numberDiv = document.createElement('div');
-    numberDiv.textContent = i;
-    numberDiv.className = "h-[30px] w-[30px] hover:bg-slate-500 max-sm:w-[27px] max-sm:h-[27px] rounded-full flex items-center justify-center cursor-pointer text-sm font-semibold bg-orange-500 text-white";
-
-    numberDiv.addEventListener('click', () => {
-      loadCharactersByPage(i);
+  // Clear all except arrows
+  [...numberContainer.querySelectorAll('div')].forEach(btn => {
+    if (btn !== numberArrow && btn !== firstArrow) btn.remove();
+  });
+  // Helper to create a page button
+  function createPageBtn(page) {
+    const btn = document.createElement('div');
+    btn.textContent = page;
+    btn.className = `blue h-[30px] w-[30px] hover:bg-slate-500 max-sm:w-[27px] max-sm:h-[27px] rounded-full flex items-center justify-center cursor-pointer text-sm font-semibold ${
+      page === currentPage ? 'bg-blue-600 text-white' : 'bg-orange-500 text-white'
+    }`;
+    btn.addEventListener('click', () => {
+      currentPage = page;
+      loadCharactersByPage(currentPage);
+      renderNumberButtons();
     });
-
-    numberContainer.insertBefore(numberDiv, dots);
+    return btn;
+  }
+  // Insert first arrow
+  numberContainer.insertBefore(firstArrow, numberContainer.firstChild);
+  // Always show first page
+  numberContainer.insertBefore(createPageBtn(1), numberArrow);
+  // Show left dots if needed
+  if (currentPage > 4) {
+    const leftDots = document.createElement('div');
+    leftDots.textContent = '...';
+    leftDots.className = 'h-[30px] w-[30px] hover:bg-slate-500 rounded-full flex items-center justify-center text-sm font-semibold max-sm:w-[27px] max-sm:h-[27px] bg-orange-500 text-white';
+    numberContainer.insertBefore(leftDots, numberArrow);
   }
 
-  numberArrow.style.display = end < totalPages ? 'grid' : 'none';
-  dots.style.display = end < totalPages ? 'grid' : 'none';
+  // Calculate range to show around currentPage
+  let start = Math.max(2, currentPage - 1);
+  let end = Math.min(totalPages - 1, currentPage + 1);
+
+  // Adjust if near start or end
+  if (currentPage <= 3) {
+    start = 2;
+    end = 4;
+  }
+  if (currentPage >= totalPages - 2) {
+    start = totalPages - 3;
+    end = totalPages - 1;
+  }
+
+  for (let i = start; i <= end; i++) {
+    if (i > 1 && i < totalPages) {
+      numberContainer.insertBefore(createPageBtn(i), numberArrow);
+    }
+  }
+
+  // Show right dots
+  if (currentPage < totalPages - 2) {
+    const rightDots = document.createElement('div');
+    rightDots.textContent = '...';
+    rightDots.className = 'h-[30px] w-[30px] hover:bg-slate-500 rounded-full flex items-center justify-center text-sm font-semibold max-sm:w-[27px] max-sm:h-[27px] bg-orange-500 text-white';
+    numberContainer.insertBefore(rightDots, numberArrow);
+  }
+
+  // Always show last page if more than 1
+  if (totalPages > 1) {
+    numberContainer.insertBefore(createPageBtn(totalPages), numberArrow);
+  }
+
 }
 
 numberArrow.addEventListener('click', () => {
-  if ((currentSet + 1) * buttonsPerSet < totalPages) {
-    currentSet++;
+  if (currentPage < totalPages) {
+    currentPage++;
+    loadCharactersByPage(currentPage);
     renderNumberButtons();
   }
 });
 
 firstArrow.addEventListener('click', () => {
-  if (currentSet > 0) {
-    currentSet--;
+  if (currentPage > 1) {
+    currentPage--;
+    loadCharactersByPage(currentPage);
     renderNumberButtons();
   }
 });
@@ -238,7 +282,6 @@ function clearFilters() {
   document.querySelectorAll(".imagee").forEach(arrow => {
     arrow.style.transform = "rotate(0deg)";
   });
-
   document.querySelectorAll(".dropdown ul").forEach(ul => {
     ul.style.display = "none";
   });
