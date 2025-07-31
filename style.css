@@ -1,3 +1,12 @@
+@media screen and (max-width: 640px) {
+.characterdata img {
+border-radius: 0px !important;
+border-color: #0fd6ab !important;
+border-style: dashed !important;
+border-width: 2px !important;
+}
+
+    }
 @keyframes slideFadeInLeft {
       0% {
         opacity: 0;

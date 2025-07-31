@@ -23,7 +23,7 @@ let activeFilters = {
 // Show character
 characterButton.addEventListener('click', function () {
   frontpage.style.display = "none";
-  secodCharacter.style.display = "flex";
+  secodCharacter.style.display = "block";
   searchdata.style.display = "flex";
   bottom.style.display = "none";
   loadCharactersByPage(1);
@@ -116,6 +116,8 @@ searchInput.addEventListener('input', async function () {
       // Helper to create a page button
       function createPageBtn(page) {
         const btn = document.createElement('div');
+        // give div id 
+        btn.id = `page-${page}`;
         btn.textContent = page;
         btn.className = `blue h-[30px] w-[30px] hover:bg-slate-500 max-sm:w-[27px] max-sm:h-[27px] rounded-full flex items-center justify-center cursor-pointer text-sm font-semibold ${
           page === searchPage ? 'bg-blue-600 text-white' : 'bg-orange-500 text-white'
