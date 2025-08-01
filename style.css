@@ -26,7 +26,12 @@
 @media screen and (max-width: 395px) {
 #rick {
   font-size: 35px !important;
-  height: 82px !important;
+  height: 80px !important;
+}
+#numbers {
+  gap: 6px !important;
+  padding-left: 0px !important;
+  padding-right: 0px !important;
 }
 
 }
