@@ -1,3 +1,9 @@
+@media screen and (max-width: 510px) {
+#rick {
+  font-size: 35px !important;
+}
+
+}
 @media screen and (max-width: 1187px) {
 .characterdata {
 height: auto !important;
@@ -66,16 +72,6 @@ li.active-filter {
 
     #rick {
       animation: slideFadeInLeft 1s ease forwards;
-    }
-
-    #and {
-      animation: fadeInCenter 1s ease forwards;
-     
-    }
-
-    #morty {
-      animation: slideFadeInRight 1s ease forwards;
-      
     }
 
     #footer {

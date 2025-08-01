@@ -46,20 +46,27 @@ function loadCharactersByPage(pageNumber) {
     .catch(err => {
       console.error("Failed to fetch characters:", err);
     });
-}
-
+} 
 // Search functionality
 const searchInput = document.getElementById("searchInput");
 const searchButton = document.getElementById("searchButton");
+let searchActive = false; // Track if search is active
 
 searchInput.addEventListener('input', async function () {
   const searchTerm = searchInput.value.trim().toLowerCase();
-  if (searchTerm === "" || searchTerm.length <= "") {
-    loadCharactersByPage(1);
+
+  // If search is empty, show first page data and reset pagination to 42 pages
+  if (searchTerm === "") {
+    searchActive = false;
+    currentPage = 1; // Reset to first page
+    list.innerHTML = "";
+    loadCharactersByPage(currentPage);
     renderNumberButtons();
     document.getElementById('numbers').style.display = "flex";
     return;
   }
+
+  searchActive = true;
   list.innerHTML = "";
 
   let allMatchedCharacters = [];
@@ -115,7 +122,6 @@ searchInput.addEventListener('input', async function () {
       // Helper to create a page button
       function createPageBtn(page) {
         const btn = document.createElement('div');
-        // give div id 
         btn.id = `page-${page}`;
         btn.textContent = page;
         btn.className = `blue h-[30px] w-[30px] hover:bg-slate-500 max-sm:w-[27px] max-sm:h-[27px] rounded-full flex items-center justify-center cursor-pointer text-sm font-semibold ${
