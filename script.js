@@ -117,8 +117,22 @@ searchInput.addEventListener('input', async function () {
           renderSearchPagination();
         }
       };
-      numberContainer.appendChild(leftBtn);
 
+      numberContainer.appendChild(leftBtn);
+const RightBtn = document.createElement('button');
+      RightBtn.id = "lastArrow";
+      RightBtn.type = "button";
+      RightBtn.className = "w-[30px] h-[30px] max-sm:w-[27px] max-sm:h-[27px] hover:bg-slate-500 rounded-[10px] flex items-center justify-center font-extrabold bg-red-700 cursor-pointer";
+      RightBtn.innerHTML = `<img class="rotate-90 w-4" src="/images/downChevron.png" alt="error" />`;
+      RightBtn.onclick = () => {
+        if (searchPage > 1) {
+          searchPage++;
+          renderSearchPage(searchPage);
+          renderSearchPagination();
+        }
+      };
+      
+      numberContainer.appendChild(leftBtn);
       // Helper to create a page button
       function createPageBtn(page) {
         const btn = document.createElement('div');
