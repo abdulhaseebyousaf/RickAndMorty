@@ -1,6 +1,32 @@
+
+@media screen and (max-width: 567px) {
+#rick {
+  font-size: 60px !important;
+}
+
+}
 @media screen and (max-width: 510px) {
 #rick {
+  font-size: 54px !important;
+}
+
+}
+@media screen and (max-width: 464px) {
+#rick {
+  font-size: 48px !important;
+}
+
+}
+@media screen and (max-width: 420px) {
+#rick {
+  font-size: 45px !important;
+}
+
+}
+@media screen and (max-width: 395px) {
+#rick {
   font-size: 35px !important;
+  height: 82px !important;
 }
 
 }
