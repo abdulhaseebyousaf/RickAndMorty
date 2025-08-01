@@ -49,7 +49,6 @@ function loadCharactersByPage(pageNumber) {
 }
 
 // Search functionality
-// if search fast its not working fix this
 const searchInput = document.getElementById("searchInput");
 const searchButton = document.getElementById("searchButton");
 
@@ -241,8 +240,10 @@ function displayCharacter(character) {
 // Pagination logic 
 function renderNumberButtons() {
   // Clear all except arrows
+  
   [...numberContainer.querySelectorAll('div')].forEach(btn => {
     if (btn !== numberArrow && btn !== firstArrow) btn.remove();
+  
   });
   
   if (!numberContainer.contains(firstArrow)) {
@@ -260,8 +261,9 @@ function renderNumberButtons() {
     btn.className = `blue h-[30px] w-[30px] hover:bg-slate-500 max-sm:w-[27px] max-sm:h-[27px] rounded-full flex items-center justify-center cursor-pointer text-sm font-semibold ${
       page === currentPage ? 'bg-blue-600 text-white' : 'bg-orange-500 text-white'
     }`;
-    btn.addEventListener('click', () => {
+    btn.addEventListener('click', function() {
       currentPage = page;
+    
       loadCharactersByPage(currentPage);
       renderNumberButtons();
     });
@@ -413,7 +415,7 @@ document.querySelectorAll('#showinner li').forEach(item => {
         }
       }
 
-      // Custom pagination for filtered results (with ... and arrows)
+      // Custom pagination for filtered results
       function renderFilteredPagination() {
         numberContainer.innerHTML = "";
 
